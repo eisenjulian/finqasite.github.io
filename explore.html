@@ -79,6 +79,7 @@ $.getJSON("dist/resource/original.json", function(data){
 $(document).ready(function(){
     var idx = hist[hist.length - 1];
     var this_data = json[idx];
+    var this_table = this_data["table"];
     pre_text = this_data["pre_text"].join(" ");
     post_text = this_data["post_text"].join(" ");
     // var r = json[url];
@@ -87,7 +88,7 @@ $(document).ready(function(){
     // title = r[2]
 
     $(`#table1`).html(pre_text);
-    $(`#table1`).html(CSV2Table(this_data["table"]));
+    $(`#table1`).html(CSV2Table(this_table));
     $(`#table1`).html(post_text);
 
     id = this_data["id"];
