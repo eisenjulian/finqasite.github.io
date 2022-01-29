@@ -87,9 +87,12 @@ $(document).ready(function(){
     // label_list = r[1];
     // title = r[2]
 
-    $(`#table1`).html(pre_text);
-    $(`#table1`).html(CSV2Table(this_table));
-    $(`#table1`).html(post_text);
+    table1_input = [pre_text, this_data["table"], post_text]
+    // $(`#table1`).html(pre_text);
+    // $(`#table1`).html(CSV2Table(this_data["table"]));
+    // $(`#table1`).html(post_text);
+
+    $(`#table1`).html(table1_input.join("\n"))
 
     id = this_data["id"];
     question = this_data["qa"]["question"];
@@ -116,9 +119,12 @@ function prev() {
         // label_list = r[1];
         // title = r[2]
 
-        $(`#table1`).html(pre_text);
-        $(`#table1`).html(CSV2Table(this_data["table"]));
-        $(`#table1`).html(post_text);
+        table1_input = [pre_text, this_data["table"], post_text]
+        // $(`#table1`).html(pre_text);
+        // $(`#table1`).html(CSV2Table(this_data["table"]));
+        // $(`#table1`).html(post_text);
+
+        $(`#table1`).html(table1_input.join("\n"))
 
         id = this_data["id"];
         question = this_data["qa"]["question"];
