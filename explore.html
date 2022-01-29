@@ -87,7 +87,7 @@ $(document).ready(function(){
     // label_list = r[1];
     // title = r[2]
 
-    table1_input = [pre_text, CSV2Table(this_data["table"]), post_text]
+    table1_input = [pre_text, CSV2Table(this_table), post_text]
     // $(`#table1`).html(pre_text);
     // $(`#table1`).html(CSV2Table(this_data["table"]));
     // $(`#table1`).html(post_text);
@@ -112,14 +112,17 @@ $(document).ready(function(){
 function prev() {
     if(hist.length > 1){
         hist.pop();
-        var idx = hist[hist.length - 1]
-        var this_data = json[idx]
+        var idx = hist[hist.length - 1];
+        var this_data = json[idx];
+        var this_table = this_data["table"];
+        pre_text = this_data["pre_text"].join(" ");
+        post_text = this_data["post_text"].join(" ");
         // var r = json[url];
         // text_list = r[0];
         // label_list = r[1];
         // title = r[2]
 
-        table1_input = [pre_text, this_data["table"], post_text]
+        table1_input = [pre_text, CSV2Table(this_table), post_text]
         // $(`#table1`).html(pre_text);
         // $(`#table1`).html(CSV2Table(this_data["table"]));
         // $(`#table1`).html(post_text);
@@ -133,27 +136,33 @@ function prev() {
         // $.get(prefix + url, function(data){
         //     $(`#table1`).html(CSV2Table(data));
         // });
-        var text_str = `<p><strong>Example id : ${id}</strong></p><br>`
-        text_str += `<p><strong>Question : ${question}</strong></p><br>`
-        text_str += `<p><strong>Program : ${program}</strong></p><br>`
-        text_str += `<p><strong>Answer : ${ans}</strong></p><br>`
+        var text_str = `<p><strong>Example id : ${id}</strong></p><br>`;
+        text_str += `<p><strong>Question : ${question}</strong></p><br>`;
+        text_str += `<p><strong>Program : ${program}</strong></p><br>`;
+        text_str += `<p><strong>Answer : ${ans}</strong></p><br>`;
         
         $(`#text1`).html(text_str);
     }
 }
 
 function next() {
-    var idx = Math.floor(Math.random() * all_htmls.length);
-    // var idx = hist[hist.length - 1]
-    var this_data = json[idx]
+    var idx = Math.floor(Math.random() * json.length);
+    // var idx = hist[hist.length - 1];
+    var this_data = json[idx];
+    var this_table = this_data["table"];
+    pre_text = this_data["pre_text"].join(" ");
+    post_text = this_data["post_text"].join(" ");
     // var r = json[url];
     // text_list = r[0];
     // label_list = r[1];
     // title = r[2]
 
-    $(`#table1`).html(pre_text);
-    $(`#table1`).html(CSV2Table(this_data["table"]));
-    $(`#table1`).html(post_text);
+    table1_input = [pre_text, CSV2Table(this_table), post_text]
+    // $(`#table1`).html(pre_text);
+    // $(`#table1`).html(CSV2Table(this_data["table"]));
+    // $(`#table1`).html(post_text);
+
+    $(`#table1`).html(table1_input.join("\n"))
 
     id = this_data["id"];
     question = this_data["qa"]["question"];
@@ -162,10 +171,10 @@ function next() {
     // $.get(prefix + url, function(data){
     //     $(`#table1`).html(CSV2Table(data));
     // });
-    var text_str = `<p><strong>Example id : ${id}</strong></p><br>`
-    text_str += `<p><strong>Question : ${question}</strong></p><br>`
-    text_str += `<p><strong>Program : ${program}</strong></p><br>`
-    text_str += `<p><strong>Answer : ${ans}</strong></p><br>`
+    var text_str = `<p><strong>Example id : ${id}</strong></p><br>`;
+    text_str += `<p><strong>Question : ${question}</strong></p><br>`;
+    text_str += `<p><strong>Program : ${program}</strong></p><br>`;
+    text_str += `<p><strong>Answer : ${ans}</strong></p><br>`;
     
     $(`#text1`).html(text_str);
     hist.push(idx);
@@ -236,7 +245,7 @@ function CSV2Table(data) {
     var lines = data;
     // lines.pop();
     //var headers = lines[0].split(separator);
-    var output = []
+    var output = [];
     for (i = 0; i < lines.length; i++){
         if(i == 0){
             output.push("<tr><th>" + lines[i].join("</th><th>") + "</th></tr>");
