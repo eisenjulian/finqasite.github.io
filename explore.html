@@ -59,8 +59,8 @@
         </div>
         <div class="row" align='center'>
         <button type="button" onclick="prev()">Prev</button> <button type="button" onclick="next()">Next</button><br>
-        <input type="text" id="table_id">
-        <button type="button" onclick="find()">Jump</button>        
+        <!-- <input type="text" id="table_id">
+        <button type="button" onclick="find()">Jump</button>         -->
         
         </div>
     </body>
@@ -74,155 +74,172 @@ var total = 1;
 $.getJSON("dist/resource/original.json", function(data){
     json = data
 });
-var all_htmls = Object.keys(json);
-var prefix = "https://raw.githubusercontent.com/wenhuchen/Table-Fact-Checking/master/data/all_csv/"
+// var all_htmls = Object.keys(json);
+// var prefix = "https://raw.githubusercontent.com/wenhuchen/Table-Fact-Checking/master/data/all_csv/"
 $(document).ready(function(){
     var idx = hist[hist.length - 1]
-    var url = all_htmls[idx]
-    var r = json[url];
-    text_list = r[0];
-    label_list = r[1];
-    title = r[2]
-    $.get(prefix + url, function(data){
-        $(`#table1`).html(CSV2Table(data));
-    });
-    var text_str = `<p><strong>Wikipedia Title : ${title}</strong></p>`
-    text_str += `<p><strong>URL : ${url}</strong></p>`
-    text_str += `<p>Note: Entailed Statements are in <span style="color:red;">RED</span>, Refuted statements are in <span style="color:green;">GREEN</span><p><br>`
-    for (var i=0; i < text_list.length; i++){
-        if(label_list[i] == 1 || label_list[i] == "Entailed"){
-            text_str += '<p style="color:red;">' + text_list[i] + "</p>";
-        }
-        else{
-            text_str += '<p style="color:green;">' + text_list[i] + "</p>";
-        }
+    var this_data = json[idx]
+    // var r = json[url];
+    // text_list = r[0];
+    // label_list = r[1];
+    // title = r[2]
 
-    }
+    $(`#table1`).html(pre_text);
+    $(`#table1`).html(CSV2Table(this_data["table"]));
+    $(`#table1`).html(post_text);
+
+    id = this_data["id"];
+    question = this_data["qa"]["question"];
+    program = this_data["qa"]["program"];
+    ans = this_data["qa"]["exe_ans"];
+    // $.get(prefix + url, function(data){
+    //     $(`#table1`).html(CSV2Table(data));
+    // });
+    var text_str = `<p><strong>Example id : ${id}</strong></p><br>`
+    text_str += `<p><strong>Question : ${question}</strong></p><br>`
+    text_str += `<p><strong>Program : ${program}</strong></p><br>`
+    text_str += `<p><strong>Answer : ${ans}</strong></p><br>`
+    
     $(`#text1`).html(text_str);
 });
 
 function prev() {
     if(hist.length > 1){
         hist.pop();
-        idx = hist[hist.length - 1];
-        var url = all_htmls[idx];
-        var r = json[url];
-        text_list = r[0];
-        label_list = r[1];
-        title = r[2]
-        //for (var i = 0; i < total; i++){
-        $.get(prefix + url, function(data){
-            $(`#table1`).html(CSV2Table(data));
-        });
-        //$('#wiki1').html(r[2]);
-        var text_str = `<p><strong>Wikipedia Title : ${title}</strong></p>`
-        text_str += `<p><strong>URL : ${url}</strong></p>`
-        text_str += `<p>Note: Entailed Statements are in <span style="color:red;">RED</span>, Refuted statements are in <span style="color:green;">GREEN</span><p><br>`
+        var idx = hist[hist.length - 1]
+        var this_data = json[idx]
+        // var r = json[url];
+        // text_list = r[0];
+        // label_list = r[1];
+        // title = r[2]
 
-        for (var i=0; i < text_list.length; i++){
-            if(label_list[i] == 1 || label_list[i] == "Entailed"){
-                text_str += '<p style="color:red;">' + text_list[i] + "</p>";
-            }
-            else{
-                text_str += '<p style="color:green;">' + text_list[i] + "</p>";
-            }
-        }
+        $(`#table1`).html(pre_text);
+        $(`#table1`).html(CSV2Table(this_data["table"]));
+        $(`#table1`).html(post_text);
+
+        id = this_data["id"];
+        question = this_data["qa"]["question"];
+        program = this_data["qa"]["program"];
+        ans = this_data["qa"]["exe_ans"];
+        // $.get(prefix + url, function(data){
+        //     $(`#table1`).html(CSV2Table(data));
+        // });
+        var text_str = `<p><strong>Example id : ${id}</strong></p><br>`
+        text_str += `<p><strong>Question : ${question}</strong></p><br>`
+        text_str += `<p><strong>Program : ${program}</strong></p><br>`
+        text_str += `<p><strong>Answer : ${ans}</strong></p><br>`
+        
         $(`#text1`).html(text_str);
     }
 }
 
 function next() {
     var idx = Math.floor(Math.random() * all_htmls.length);
-    var url = all_htmls[idx];
-    
-    var r = json[url];
-    text_list = r[0];
-    label_list = r[1];
-    title = r[2]
-    //for (var i = 0; i < total; i++){
-    $.get(prefix + url, function(data){
-        $(`#table1`).html(CSV2Table(data));
-    });
-    //$('#wiki1').html(r[2]);
-    var text_str = `<p><strong>Wikipedia Title : ${title}</strong></p>`
-    text_str += `<p><strong>URL : ${url}</strong></p>`
-    text_str += `<p>Note: Entailed Statements are in <span style="color:red;">RED</span>, Refuted statements are in <span style="color:green;">GREEN</span><p><br>`
+    // var idx = hist[hist.length - 1]
+    var this_data = json[idx]
+    // var r = json[url];
+    // text_list = r[0];
+    // label_list = r[1];
+    // title = r[2]
 
-    for (var i=0; i < text_list.length; i++){
-        if(label_list[i] == 1 || label_list[i] == "Entailed"){
-            text_str += '<p style="color:red;">' + text_list[i] + "</p>";
-        }
-        //else if(label_list[i] == "Neutral"){
-        //    text_str += '<p>' + text_list[i] + "</p>";
-        //}
-        else{
-            text_str += '<p style="color:green;">' + text_list[i] + "</p>";
-        }
-    }
+    $(`#table1`).html(pre_text);
+    $(`#table1`).html(CSV2Table(this_data["table"]));
+    $(`#table1`).html(post_text);
+
+    id = this_data["id"];
+    question = this_data["qa"]["question"];
+    program = this_data["qa"]["program"];
+    ans = this_data["qa"]["exe_ans"];
+    // $.get(prefix + url, function(data){
+    //     $(`#table1`).html(CSV2Table(data));
+    // });
+    var text_str = `<p><strong>Example id : ${id}</strong></p><br>`
+    text_str += `<p><strong>Question : ${question}</strong></p><br>`
+    text_str += `<p><strong>Program : ${program}</strong></p><br>`
+    text_str += `<p><strong>Answer : ${ans}</strong></p><br>`
+    
     $(`#text1`).html(text_str);
     hist.push(idx);
 }
 
-function find() {
-    var input_url = $('#table_id').val().trim()
-    var idx = 0;
-    while (idx < all_htmls.length){
-        if(all_htmls[idx] == input_url){
-            break
-        }
-        else{
-            idx += 1;
-        }
-    }
-    if (idx < all_htmls.length){
-        var r = json[input_url];
-        text_list = r[0];
-        label_list = r[1];
-        title = r[2]
-        //for (var i = 0; i < total; i++){
-        $.get(prefix + input_url, function(data){
-            $(`#table1`).html(CSV2Table(data));
-        });
-        //$('#wiki1').html(r[2]);
-        var text_str = `<p><strong>Wikipedia Title : ${title}</strong></p>`
-        text_str += `<p><strong>URL : ${input_url}</strong></p>`
-        text_str += `<p>Note: Entailed Statements are in <span style="color:red;">RED</span>, Refuted statements are in <span style="color:green;">GREEN</span><p><br>`
+// function find() {
+//     var input_url = $('#table_id').val().trim()
+//     var idx = 0;
+//     while (idx < all_htmls.length){
+//         if(all_htmls[idx] == input_url){
+//             break
+//         }
+//         else{
+//             idx += 1;
+//         }
+//     }
+//     if (idx < all_htmls.length){
+//         var r = json[input_url];
+//         text_list = r[0];
+//         label_list = r[1];
+//         title = r[2]
+//         //for (var i = 0; i < total; i++){
+//         $.get(prefix + input_url, function(data){
+//             $(`#table1`).html(CSV2Table(data));
+//         });
+//         //$('#wiki1').html(r[2]);
+//         var text_str = `<p><strong>Wikipedia Title : ${title}</strong></p>`
+//         text_str += `<p><strong>URL : ${input_url}</strong></p>`
+//         text_str += `<p>Note: Entailed Statements are in <span style="color:red;">RED</span>, Refuted statements are in <span style="color:green;">GREEN</span><p><br>`
 
-        for (var i=0; i < text_list.length; i++){
-            if(label_list[i] == 1 || label_list[i] == "Entailed"){
-                text_str += '<p style="color:red;">' + text_list[i] + "</p>";
-            }
-            //else if(label_list[i] == "Neutral"){
-            //    text_str += '<p>' + text_list[i] + "</p>";
-            //}
-            else{
-                text_str += '<p style="color:green;">' + text_list[i] + "</p>";
-            }
-        }
-        $(`#text1`).html(text_str);
-        hist.push(idx);         
-    }
-    else{
-        console.log("CANNOT FIND IT!");
-    }
-}
+//         for (var i=0; i < text_list.length; i++){
+//             if(label_list[i] == 1 || label_list[i] == "Entailed"){
+//                 text_str += '<p style="color:red;">' + text_list[i] + "</p>";
+//             }
+//             //else if(label_list[i] == "Neutral"){
+//             //    text_str += '<p>' + text_list[i] + "</p>";
+//             //}
+//             else{
+//                 text_str += '<p style="color:green;">' + text_list[i] + "</p>";
+//             }
+//         }
+//         $(`#text1`).html(text_str);
+//         hist.push(idx);         
+//     }
+//     else{
+//         console.log("CANNOT FIND IT!");
+//     }
+// }
     
+// function CSV2Table(data) {
+//     var lines = data.split("\n");
+//     lines.pop();
+//     //var headers = lines[0].split(separator);
+//     var output = []
+//     for (i = 0; i < lines.length; i++){
+//         if(i == 0){
+//             output.push("<tr><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+//         }
+//         else{
+//             output.push("<tr><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");
+//         }
+//     }
+//     output = "<table class='wikitable'>" + output.join("") + "</table>";
+//     return output
+// }
+
 function CSV2Table(data) {
-    var lines = data.split("\n");
-    lines.pop();
+    var lines = data;
+    // lines.pop();
     //var headers = lines[0].split(separator);
     var output = []
     for (i = 0; i < lines.length; i++){
         if(i == 0){
-            output.push("<tr><th>" + lines[i].slice(0,-1).split("#").join("</th><th>") + "</th></tr>");
+            output.push("<tr><th>" + lines[i].join("</th><th>") + "</th></tr>");
         }
         else{
-            output.push("<tr><td>" + lines[i].slice(0,-1).split("#").join("</td><td>") + "</td></tr>");
+            output.push("<tr><td>" + lines[i].join("</td><td>") + "</td></tr>");
         }
     }
     output = "<table class='wikitable'>" + output.join("") + "</table>";
     return output
 }
+
 
 function parseCSV(data) {
     return parseDSV(data, "#");
