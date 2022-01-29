@@ -79,6 +79,8 @@ $.getJSON("dist/resource/original.json", function(data){
 $(document).ready(function(){
     var idx = hist[hist.length - 1]
     var this_data = json[idx]
+    pre_text = this_data["pre_text"]
+    post_text = this_data["post_text"]
     // var r = json[url];
     // text_list = r[0];
     // label_list = r[1];
