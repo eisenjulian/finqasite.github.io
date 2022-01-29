@@ -1,2 +1,2 @@
-# finqasite.github.io
-The webpage for the finQA dataset
+# tabfact.github.io
+The official page for TabFact dataset from UCSB NLP group.
