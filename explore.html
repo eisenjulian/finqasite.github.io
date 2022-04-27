@@ -72,11 +72,21 @@ var hist = [0];
 var json;
 var total = 1;
 $.getJSON("dist/resource/original.json", function(data){
-    json = data
+    json = data;
+    var id = window.location.hash.substr(1);
+    if (id) {
+        var idx = 0;
+        while (idx < all_htmls.length){
+            if (json[idx].id == id) {
+                hist = [idx];
+                break;
+            }
+        }
+    }
+    draw();
 });
 // var all_htmls = Object.keys(json);
-// var prefix = "https://raw.githubusercontent.com/wenhuchen/Table-Fact-Checking/master/data/all_csv/"
-$(document).ready(function(){
+function draw() {
     var idx = hist[hist.length - 1];
     var this_data = json[idx];
     var this_table = this_data["table"];
@@ -95,6 +105,7 @@ $(document).ready(function(){
     $(`#table1`).html(table1_input.join("\n"))
 
     id = this_data["id"];
+    window.location.hash = id;
     question = this_data["qa"]["question"];
     program = this_data["qa"]["program"];
     ans = this_data["qa"]["exe_ans"];
@@ -107,77 +118,23 @@ $(document).ready(function(){
     text_str += `<p><strong>Answer : ${ans}</strong></p><br>`;
     
     $(`#text1`).html(text_str);
-});
+}
+    
+// $(document).ready(function(){
+//     draw()
+// });
 
 function prev() {
     if(hist.length > 1){
         hist.pop();
-        var idx = hist[hist.length - 1];
-        var this_data = json[idx];
-        var this_table = this_data["table"];
-        pre_text = this_data["pre_text"].join(" ");
-        post_text = this_data["post_text"].join(" ");
-        // var r = json[url];
-        // text_list = r[0];
-        // label_list = r[1];
-        // title = r[2]
-
-        table1_input = [pre_text, CSV2Table(this_table), post_text]
-        // $(`#table1`).html(pre_text);
-        // $(`#table1`).html(CSV2Table(this_data["table"]));
-        // $(`#table1`).html(post_text);
-
-        $(`#table1`).html(table1_input.join("\n"))
-
-        id = this_data["id"];
-        question = this_data["qa"]["question"];
-        program = this_data["qa"]["program"];
-        ans = this_data["qa"]["exe_ans"];
-        // $.get(prefix + url, function(data){
-        //     $(`#table1`).html(CSV2Table(data));
-        // });
-        var text_str = `<p><strong>Example id : ${id}</strong></p><br>`;
-        text_str += `<p><strong>Question : ${question}</strong></p><br>`;
-        text_str += `<p><strong>Program : ${program}</strong></p><br>`;
-        text_str += `<p><strong>Answer : ${ans}</strong></p><br>`;
-        
-        $(`#text1`).html(text_str);
+        draw(idx)
     }
 }
 
 function next() {
     var idx = Math.floor(Math.random() * json.length);
-    // var idx = hist[hist.length - 1];
-    var this_data = json[idx];
-    var this_table = this_data["table"];
-    pre_text = this_data["pre_text"].join(" ");
-    post_text = this_data["post_text"].join(" ");
-    // var r = json[url];
-    // text_list = r[0];
-    // label_list = r[1];
-    // title = r[2]
-
-    table1_input = [pre_text, CSV2Table(this_table), post_text]
-    // $(`#table1`).html(pre_text);
-    // $(`#table1`).html(CSV2Table(this_data["table"]));
-    // $(`#table1`).html(post_text);
-
-    $(`#table1`).html(table1_input.join("\n"))
-
-    id = this_data["id"];
-    question = this_data["qa"]["question"];
-    program = this_data["qa"]["program"];
-    ans = this_data["qa"]["exe_ans"];
-    // $.get(prefix + url, function(data){
-    //     $(`#table1`).html(CSV2Table(data));
-    // });
-    var text_str = `<p><strong>Example id : ${id}</strong></p><br>`;
-    text_str += `<p><strong>Question : ${question}</strong></p><br>`;
-    text_str += `<p><strong>Program : ${program}</strong></p><br>`;
-    text_str += `<p><strong>Answer : ${ans}</strong></p><br>`;
-    
-    $(`#text1`).html(text_str);
     hist.push(idx);
+    draw();   
 }
 
 // function find() {
