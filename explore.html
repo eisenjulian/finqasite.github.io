@@ -73,6 +73,10 @@ var json;
 var total = 1;
 $.getJSON("dist/resource/original.json", function(data){
     json = data;
+    find();
+    window.onhashchange = find;
+});
+function find() {
     var id = window.location.hash.substr(1);
     if (id) {
         var idx = 0;
@@ -85,7 +89,7 @@ $.getJSON("dist/resource/original.json", function(data){
         }
     }
     draw();
-});
+}
 // var all_htmls = Object.keys(json);
 function draw() {
     var idx = hist[hist.length - 1];
