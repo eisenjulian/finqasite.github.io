@@ -82,7 +82,7 @@ function find() {
         var idx = 0;
         while (idx < json.length){
             if (json[idx].id == id) {
-                hist = [idx];
+                hist.push(idx);
                 break;
             }
             idx++;
@@ -94,6 +94,7 @@ function find() {
 function draw() {
     var idx = hist[hist.length - 1];
     var this_data = json[idx];
+    console.log(this_data);
     var this_table = this_data["table"];
     pre_text = this_data["pre_text"].join(" ");
     post_text = this_data["post_text"].join(" ");
