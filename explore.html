@@ -71,19 +71,21 @@ jQuery.ajaxSetup({async:false});
 var hist = [0];
 var json;
 var total = 1;
-$.getJSON("dist/resource/original.json", function(data){
+$.getJSON("dist/resource/dev.json", function(data){
     json = data;
     find();
     window.onhashchange = find;
 });
 function find() {
     var id = window.location.hash.substr(1);
+    console.log("Searching", id);
     if (id) {
         var idx = 0;
         while (idx < json.length){
             if (json[idx].id == id) {
                 hist.push(idx);
                 break;
+                console.log("Found", id);
             }
             idx++;
         }
