@@ -76,7 +76,7 @@ $.getJSON("dist/resource/original.json", function(data){
     var id = window.location.hash.substr(1);
     if (id) {
         var idx = 0;
-        while (idx < all_htmls.length){
+        while (idx < json.length){
             if (json[idx].id == id) {
                 hist = [idx];
                 break;
